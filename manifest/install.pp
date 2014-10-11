@@ -1,5 +1,5 @@
 class tmpreaper::install {
-  package { '${::rkhunter::params::package_name}':
+  package { '${::tmpreaper::params::packages}':
     ensure => 'installed',
   }
 }
