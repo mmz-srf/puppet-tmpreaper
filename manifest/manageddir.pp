@@ -1,5 +1,7 @@
 define tmpreaper::manageddir (
   $ensure       = "present"
+  $directories
+  $time
   $logdeleted   = "false"
   $force        = "false"
   $delay        = "false"
@@ -15,19 +17,21 @@ define tmpreaper::manageddir (
   $weekday      = "*"
   $user         = "root"
 ) {
-  include ::tmpreaper::install
-  $log_switch = ""
-  $force_switch = ""
-  $delay_switch = ""
-  $runtime_switch = ""
-  $mtime_switch = ""
-  $ctime_switch = ""
-  $symlinks_switch = ""
-  $all_switch = ""
-  $protect_switch = ""
+  require ::tmpreaper::install
+
+  $log_switch       = ""
+  $force_switch     = ""
+  $delay_switch     = ""
+  $runtime_switch   = ""
+  $mtime_switch     = ""
+  $ctime_switch     = ""
+  $symlinks_switch  = ""
+  $all_switch       = ""
+  $protect_switch   = ""
 
   if $logdeleted != 'false' {
-    $log_switch = "--showdeleted > ${logdeleted}"
+    $log_switch = "--showdeleted"
+    $logpath    = " > ${logdeleted}" 
   }
   
   if $force != 'false' {
@@ -58,7 +62,7 @@ define tmpreaper::manageddir (
     $all_switch = "--all"
   }
 
-  $cron_cmd = "${::tmpreaper::params::cmd} ${force_switch} ${dalay_switch} ${runtime_switch} ${mtime_switch} ${ctime_switch} ${symlinks_switch} ${all_switch} ${log_switch}"
+  $cron_cmd = "${::tmpreaper::params::cmd} ${force_switch} ${dalay_switch} ${runtime_switch} ${mtime_switch} ${ctime_switch} ${symlinks_switch} ${all_switch} ${log_switch} ${time} ${directories} ${logpath}"
 
   cron { "$name":
     ensure      => $ensure,
