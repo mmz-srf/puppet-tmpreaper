@@ -1,4 +1,4 @@
-define tmpreaper::manageddir (
+define tmpreaper::cron (
   $ensure       = "present",
   $directories,
   $time,
