@@ -1,20 +1,20 @@
 define tmpreaper::manageddir (
-  $ensure       = "present"
-  $directories
-  $time
-  $logdeleted   = "false"
-  $force        = "false"
-  $delay        = "false"
-  $runtime      = "false"
-  $mtime        = "false"
-  $ctime        = "false"
-  $symlinks     = "false"
-  $all          = "false"
-  $protect      = "false" 
+  $ensure       = "present",
+  $directories,
+  $time,
+  $logdeleted   = "false",
+  $force        = "false",
+  $delay        = "false",
+  $runtime      = "false",
+  $mtime        = "false",
+  $ctime        = "false",
+  $symlinks     = "false",
+  $all          = "false",
+  $protect      = "false",
 
-  $hour         = "*"
-  $minute       = "*"
-  $weekday      = "*"
+  $hour         = "*",
+  $minute       = "*",
+  $weekday      = "*",
   $user         = "root"
 ) {
   require ::tmpreaper::install
