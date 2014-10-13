@@ -15,54 +15,49 @@ define tmpreaper::manageddir (
   $hour         = "*",
   $minute       = "*",
   $weekday      = "*",
-  $user         = "root"
+  $user         = "root",
+  $email         = "root@localhost"
+
 ) {
   require ::tmpreaper::install
 
-  $log_switch       = ""
-  $force_switch     = ""
-  $delay_switch     = ""
-  $runtime_switch   = ""
-  $mtime_switch     = ""
-  $ctime_switch     = ""
-  $symlinks_switch  = ""
-  $all_switch       = ""
-  $protect_switch   = ""
-
   if $logdeleted != 'false' {
-    $log_switch = "--showdeleted"
-    $logpath    = " > ${logdeleted}" 
+    $log_switch = " --showdeleted"
+    $logpath    = "> ${logdeleted}" 
+  } else { 
+    $log_switch = "" 
+    $logpath    = "" 
   }
   
   if $force != 'false' {
-    $force_switch = "--force"
-  }
+    $force_switch = " --force"
+  } else { $force_switch = "" }
 
   if $delay != 'false' {
-    $delay_switch = "--delay=${delay}"
-  }
+    $delay_switch = " --delay=${delay}"
+  } else { $delay_switch = "" }
 
   if $runtime != 'false' {
-    $runtime_switch = "--runtime=${runtime}"
-  }
+    $runtime_switch = " --runtime=${runtime}"
+  } else { $runtime_switch = "" }
 
   if $mtime != 'false' {
-    $mtime_switch = "--mtime"
-  }
+    $mtime_switch = " --mtime"
+  } else { $mtime_switch = "" }
 
   if $ctime != 'false' {
-    $ctime_switch = "--ctime"
-  }
+    $ctime_switch = " --ctime"
+  } else { $ctime_switch = "" }
 
   if $symlinks != 'false' {
     $symlinks_switch = "--symlinks"
-  }
+  } else { $symlinks_switch = "" }
 
   if $all != 'false' {
-    $all_switch = "--all"
-  }
+    $all_switch = " --all"
+  } else { $all_switch = "" }
 
-  $cron_cmd = "${::tmpreaper::params::cmd} ${force_switch} ${dalay_switch} ${runtime_switch} ${mtime_switch} ${ctime_switch} ${symlinks_switch} ${all_switch} ${log_switch} ${time} ${directories} ${logpath}"
+  $cron_cmd = "${::tmpreaper::params::cmd}${force_switch}${dalay_switch}${runtime_switch}${mtime_switch}${ctime_switch}${symlinks_switch}${all_switch}${log_switch} ${time} ${directories} ${logpath}"
 
   cron { "$name":
     ensure      => $ensure,
