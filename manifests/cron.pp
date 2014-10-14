@@ -57,7 +57,7 @@ define tmpreaper::cron (
     $all_switch = " --all"
   } else { $all_switch = "" }
 
-  $cron_cmd = "${::tmpreaper::params::cmd}${force_switch}${dalay_switch}${runtime_switch}${mtime_switch}${ctime_switch}${symlinks_switch}${all_switch}${log_switch} ${time} ${directories} ${logpath}"
+  $cron_cmd = "nice -n10 ${::tmpreaper::params::cmd}${force_switch}${dalay_switch}${runtime_switch}${mtime_switch}${ctime_switch}${symlinks_switch}${all_switch}${log_switch} ${time} ${directories} ${logpath}"
 
   cron { "$name":
     ensure      => $ensure,
